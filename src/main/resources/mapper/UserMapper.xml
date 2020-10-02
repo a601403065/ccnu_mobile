@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccnu.mobile.mapper.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.ccnu.mobile.entity.User">
+        <id column="pkid" jdbcType="INTEGER" property="pkid"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="is_admin" jdbcType="INTEGER" property="isAdmin"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+    </resultMap>
+    
+    
+    <select id="selectRegisterUser" parameterType="Integer" resultMap="BaseResultMap">
+    	Select u.name, u.number
+    	From user u join user_activity ua
+    	on u.pkid = ua.user_id
+    	Where ua.activity_id = #{activityId}
+    	and u.valid = 1
+    	and ua.valid = 1
+    </select>
+</mapper>

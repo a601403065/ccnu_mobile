@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccnu.mobile.mapper.ActivityDetailMapper">
+
+	<resultMap id="BaseResultMap" type="com.ccnu.mobile.entity.ActivityDetail">
+        <id column="pkid" jdbcType="INTEGER" property="pkid"/>
+        <result column="activity_id" jdbcType="INTEGER" property="activityId"/>
+        <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
+        <result column="qr_code" jdbcType="VARCHAR" property="qrCode"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+    </resultMap>
+    
+    <resultMap id="activityDetailMap" type="com.ccnu.mobile.entity.vo.ActivityDetailVo">
+        <id column="pkid" jdbcType="INTEGER" property="pkid"/>
+        <result column="activity_name" jdbcType="VARCHAR" property="activityName"/>
+        <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
+        <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
+        <result column="activity_begin_time" jdbcType="VARCHAR" property="activityBeginTime"/>
+        <result column="activity_end_time" jdbcType="VARCHAR" property="activityEndTime"/>
+        <result column="register_begin_time" jdbcType="VARCHAR" property="registerBeginTime"/>
+        <result column="register_end_time" jdbcType="VARCHAR" property="registerEndTime"/>
+        <result column="register_amount" jdbcType="INTEGER" property="registerAmount"/>
+        <result column="register_max_amount" jdbcType="INTEGER" property="registerMaxAmount"/>
+        <result column="activity_content" jdbcType="VARCHAR" property="activityContent"/>
+        <result column="activity_url" jdbcType="VARCHAR" property="activityUrl"/>
+        <result column="qr_code" jdbcType="VARCHAR" property="qrCode"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+    </resultMap>
+    
+    <select id="selectActivityDetail" parameterType="Integer" resultMap="activityDetailMap">
+    	Select * 
+    	From activity a join activity_detail ad
+    	on a.pkid = ad.activity_id
+    	Where a.pkid = #{activityId}
+    	and a.valid = 1 
+    	and ad.valid = 1
+    </select>
+    
+    <select id="selectListByPublisherId" parameterType="Integer" resultMap="activityDetailMap">
+     	Select * 
+    	From activity a join activity_detail ad
+    	on a.pkid = ad.activity_id
+    	Where a.publisher_id = #{publisherId}
+    	and a.valid = 1 
+    	and ad.valid = 1
+    </select>
+    
+</mapper>

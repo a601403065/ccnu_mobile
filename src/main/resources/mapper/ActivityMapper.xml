@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccnu.mobile.mapper.ActivityMapper">
+
+	<resultMap id="BaseResultMap" type="com.ccnu.mobile.entity.Activity">
+        <id column="pkid" jdbcType="INTEGER" property="pkid"/>
+        <result column="activity_name" jdbcType="VARCHAR" property="activityName"/>
+        <result column="activity_address" jdbcType="VARCHAR" property="activityAddress"/>
+        <result column="activity_begin_time" jdbcType="VARCHAR" property="activityBeginTime"/>
+        <result column="activity_end_time" jdbcType="VARCHAR" property="activityEndTime"/>
+        <result column="activity_type" jdbcType="INTEGER" property="activityType"/>
+        <result column="top_status" jdbcType="INTEGER" property="topStatus"/>
+        <result column="added_time" jdbcType="VARCHAR" property="addedTime"/>
+        <result column="publisher" jdbcType="VARCHAR" property="publisher"/>
+        <result column="publisherId" jdbcType="INTEGER" property="publisherId"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+    </resultMap>
+    
+    <select id="selectMyActivity" parameterType="INTEGER" resultMap="BaseResultMap">
+    	Select a.activity_name, a.publisher, a.activity_address, a.activity_begin_time
+    	From activity a join user_activity ua
+    	on a.pkid = ua.activity_id
+    	where ua.user_id = #{userId}
+    </select>
+    
+    <insert id="insertActivity" useGeneratedKeys="true" keyProperty="pkid" keyColumn="pkid" parameterType="com.ccnu.mobile.entity.Activity">
+    	Insert into activity
+    	(activity_name, activity_address, activity_begin_time, activity_end_time, activity_type, 
+    	top_status, added_time, publisher, publisher_id, valid)
+    	values (#{activityName,jdbcType=VARCHAR}, #{activityAddress,jdbcType=VARCHAR},
+    	#{activityBeginTime,jdbcType=VARCHAR}, #{activityEndTime,jdbcType=VARCHAR},
+    	#{activityType,jdbcType=INTEGER}, #{topStatus,jdbcType=INTEGER}, #{addedTime,jdbcType=VARCHAR},
+    	#{publisher,jdbcType=VARCHAR}, #{publisherId,jdbcType=INTEGER},#{valid,jdbcType=INTEGER})
+    </insert>
+    
+</mapper>
